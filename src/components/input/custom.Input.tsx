@@ -2,6 +2,8 @@ import { useState, useCallback } from "react";
 import type { JSX } from "react";
 //icons
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+//types
+import type { CustomInputProps } from "../../types/types";
 
 const CustomInput = ({
   label,
@@ -10,14 +12,7 @@ const CustomInput = ({
   value,
   onChange,
   ...others
-}: {
-  label: string;
-  type: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  others?: React.InputHTMLAttributes<HTMLInputElement>;
-}): JSX.Element => {
+}: CustomInputProps): JSX.Element => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const togglePasswordVisibility = useCallback(() => {
     setShowPassword((prev) => !prev);

@@ -1,8 +1,11 @@
 import { useState, useCallback } from "react";
 //components
 import CustomInput from "../../components/input/custom.Input";
+import CustomButton from "../../components/button/custm.button";
 //types
 import type { LoginValues } from "../../types/types";
+//icons
+import { IoLogInOutline } from "react-icons/io5";
 
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<LoginValues>({
@@ -46,7 +49,14 @@ const LoginPage = () => {
               onChange={handleInputChange}
             />
           </div>
-          <button>Login</button>
+          <div className="action">
+            <CustomButton variant="secondary" type="submit">
+              <div className="title">Login</div>
+              <div className="icon">
+                <IoLogInOutline />
+              </div>
+            </CustomButton>
+          </div>
         </form>
       </div>
     </div>
