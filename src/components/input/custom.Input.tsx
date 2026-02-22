@@ -6,10 +6,17 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 const CustomInput = ({
   label,
   type = "text",
+  name,
+  value,
+  onChange,
   ...others
 }: {
   label: string;
   type: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  others?: React.InputHTMLAttributes<HTMLInputElement>;
 }): JSX.Element => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const togglePasswordVisibility = useCallback(() => {
@@ -21,6 +28,9 @@ const CustomInput = ({
         type={type === "password" && showPassword ? "text" : type}
         id="custom-input"
         className="custom-input"
+        name={name}
+        value={value}
+        onChange={onChange}
         {...others}
       />
       <label htmlFor="custom-input">{label}</label>
