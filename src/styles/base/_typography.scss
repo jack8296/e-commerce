@@ -1,0 +1,5 @@
+@use "../abstract/variables" as *;
+
+h2{
+    font-size: $font-size-xl;
+}

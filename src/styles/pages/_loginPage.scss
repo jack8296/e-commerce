@@ -1,0 +1,29 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+
+.login-page{
+    background: linear-gradient(135deg, rgba($primary-color, 0.3), rgba($primary-color, 1));
+    height: 100dvh;
+    @include flex($justify: center);
+}
+
+.login-container{
+    background-color: rgba($primary-color, 1);
+    box-shadow: $shadow-md;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    max-width: 500px;
+    width: 100%;
+    h2{
+        color: $text-primary;
+        margin-bottom: $space-md;
+        text-align: center;
+    }
+}
+.email-input{
+    padding: $space-md;
+}
+.password-input{
+    padding: $space-md;
+}

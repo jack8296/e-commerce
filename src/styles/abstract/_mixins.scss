@@ -1,0 +1,11 @@
+@mixin flex($justify: center) {
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+}
+
+@mixin button-base {
+  padding: $spacing-md;
+  border-radius: $border-radius;
+  cursor: pointer;
+}
