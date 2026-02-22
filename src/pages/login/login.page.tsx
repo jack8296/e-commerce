@@ -14,9 +14,10 @@ import { IoLogInOutline } from "react-icons/io5";
 import { Login } from "../../services/auth/auth.service";
 //features
 import { setToken } from "../../features/auth/auth.slicer";
-import type { RootState } from "../../app/store/store";
 //helpers
 import { setItem } from "../../helpers/localStorage.helper";
+//toast
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<LoginValues>({
@@ -24,8 +25,7 @@ const LoginPage = () => {
     password: "",
   });
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.auth);
-  console.log("Token from Redux Store:", token);
+
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -37,7 +37,7 @@ const LoginPage = () => {
     [],
   );
 
-  const { mutate, isPending, error } = useMutation<
+  const { mutate, isPending } = useMutation<
     { token: string },
     Error,
     LoginValues
@@ -46,6 +46,11 @@ const LoginPage = () => {
     onSuccess: (response) => {
       dispatch(setToken(response.token));
       setItem(response.token);
+      toast.success("Login successful!");
+    },
+    onError: (error) => {
+      console.log("error", error);
+      toast.error("Something went wrong!");
     },
   });
 

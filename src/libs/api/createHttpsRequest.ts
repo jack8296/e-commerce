@@ -1,4 +1,8 @@
-import axios, { type AxiosRequestConfig, type Method } from "axios";
+import axios, {
+  type AxiosRequestConfig,
+  type Method,
+  type isAxiosError,
+} from "axios";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -30,11 +34,9 @@ export const createHttpsRequest = () => {
     try {
       const response = await axiosInstance.request<TResponse>(config);
       return response.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.response?.data);
-      }
-      throw error;
+    } catch (error: any) {
+      const errorMessage = error.response.data;
+      throw new Error(errorMessage);
     }
   };
 };
