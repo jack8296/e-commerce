@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
 export type Props = { children: ReactNode };
 
 export type LoginValues = {
-  email: string;
+  username: string;
   password: string;
 };
 export type CustomButtonProps = {
@@ -17,3 +17,7 @@ export type CustomInputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 } & React.InputHTMLAttributes<HTMLInputElement>;
+
+export type Token = {
+  accessToken: string;
+};

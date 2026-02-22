@@ -2,7 +2,6 @@ import axios, { type AxiosRequestConfig, type Method } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  withCredentials: true,
 });
 
 export const createHttpsRequest = () => {
