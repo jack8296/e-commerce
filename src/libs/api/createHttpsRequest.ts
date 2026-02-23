@@ -1,8 +1,4 @@
-import axios, {
-  type AxiosRequestConfig,
-  type Method,
-  type isAxiosError,
-} from "axios";
+import axios, { type AxiosRequestConfig, type Method } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -34,9 +30,18 @@ export const createHttpsRequest = () => {
     try {
       const response = await axiosInstance.request<TResponse>(config);
       return response.data;
-    } catch (error: any) {
-      const errorMessage = error.response.data;
-      throw new Error(errorMessage);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const message =
+          (error.response?.data as any) ||
+          error.message ||
+          (error.response?.data as any)?.error;
+        throw new Error(message);
+      }
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Unexpected error");
     }
   };
 };

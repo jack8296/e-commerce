@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 //redux-toolkit
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 //react query
 import { useMutation } from "@tanstack/react-query";
 //components
@@ -49,8 +49,7 @@ const LoginPage = () => {
       toast.success("Login successful!");
     },
     onError: (error) => {
-      console.log("error", error);
-      toast.error("Something went wrong!");
+      toast.error(error?.message);
     },
   });
 
