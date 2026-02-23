@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import CustomInput from "../../components/input/custom.Input";
 import CustomButton from "../../components/button/custm.button";
 //types
-import type { LoginValues } from "../../types/types";
+import type { LoginValues, LoginFormError } from "../../types/types";
 //icons
 import { IoLogInOutline } from "react-icons/io5";
 //services
@@ -24,6 +24,7 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
+
   const dispatch = useDispatch();
 
   const handleInputChange = useCallback(
@@ -56,6 +57,15 @@ const LoginPage = () => {
   const handleLogin = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
+      const { username, password } = formValues;
+      if (!username) {
+        toast.error("Username is required");
+        return;
+      }
+      if (!password) {
+        toast.error("Password is required");
+        return;
+      }
       mutate(formValues);
     },
     [formValues, mutate],

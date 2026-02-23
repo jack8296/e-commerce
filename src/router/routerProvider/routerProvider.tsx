@@ -5,6 +5,7 @@ import { PrivateRoute } from "../privateRoute/privateRoute";
 import { PublicRoute } from "../publicRoute/publicRoute";
 //pages
 import LoginPage from "../../pages/login/login.page";
+import Dashboardpage from "../../pages/dashboard/dashboard.page";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Home Page - Protected</h1>,
+        element: <Dashboardpage />,
       },
     ],
   },

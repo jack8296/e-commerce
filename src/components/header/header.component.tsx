@@ -1,7 +1,13 @@
-import React from "react";
-
+import logo from "../../assets/1.jpg";
 const Header = () => {
-  return <div></div>;
+  return (
+    <nav className="header-container">
+      <div className="logo">
+        <img src={logo} alt="Logo" />
+      </div>
+      <div className="username">N</div>
+    </nav>
+  );
 };
 
 export default Header;

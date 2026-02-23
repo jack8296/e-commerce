@@ -21,3 +21,8 @@ export type CustomInputProps = {
 export type Token = {
   accessToken: string;
 };
+
+export type LoginFormError = {
+  usernameError: string;
+  passwordError: string;
+};

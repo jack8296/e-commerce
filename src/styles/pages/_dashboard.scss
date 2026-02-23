@@ -1,0 +1,6 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.dashboard-page{
+    background: linear-gradient(45deg $secondary-color 0.4%, $secondary-color 1%);
+}
