@@ -21,7 +21,11 @@ const Sidebar = ({
     <div className="sidebar-container">
       <div className="sidebar-main">
         <div className="close-action" onClick={handleClose}>
-          <MdKeyboardDoubleArrowLeft />
+          {toggleSidebar ? (
+            <MdKeyboardDoubleArrowLeft />
+          ) : (
+            <MdKeyboardDoubleArrowRight />
+          )}
         </div>
         <ul className="lists">
           <li className="item">
