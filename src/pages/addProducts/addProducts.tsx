@@ -1,11 +1,35 @@
 import type { JSX } from "react";
+import React, { useState, useCallback } from "react";
 //components
 import CustomInput from "../../components/input/custom.Input";
 import CustomButton from "../../components/button/custm.button";
 import TextArea from "../../components/textArea/textArea";
 //icons
 import { CiHome } from "react-icons/ci";
+//types
+import type { ProductsValues } from "../../types/types";
 const AddProducts = (): JSX.Element => {
+  const [addProductsValues, setAddProductsValues] = useState<ProductsValues>({
+    title: "",
+    price: "",
+    category: "",
+    image: "",
+    description: "",
+  });
+
+  const handleProductValues = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setAddProductsValues((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    [],
+  );
+
+  console.log("values", addProductsValues);
+
   return (
     <div className="addProducts-container">
       <h2>Add Products</h2>
@@ -15,15 +39,15 @@ const AddProducts = (): JSX.Element => {
             label="Title"
             type="text"
             name="title"
-            value=""
-            onChange={() => {}}
+            value={addProductsValues?.title}
+            onChange={handleProductValues}
           />
           <CustomInput
             label="Price"
             type="number"
             name="price"
-            value=""
-            onChange={() => {}}
+            value={addProductsValues?.price}
+            onChange={handleProductValues}
           />
         </div>
         <div className="form-bottom-section">
@@ -31,32 +55,37 @@ const AddProducts = (): JSX.Element => {
             label="Category"
             type="text"
             name="category"
-            value=""
-            onChange={() => {}}
+            value={addProductsValues?.category}
+            onChange={handleProductValues}
           />
           <CustomInput
             label="Image URL"
             type="text"
             name="image"
-            value=""
-            onChange={() => {}}
+            value={addProductsValues?.image}
+            onChange={handleProductValues}
           />
         </div>
         <div className="form-textarea">
-          <TextArea />
+          <TextArea
+            name="description"
+            placeHolder="Description goes here..."
+            value={addProductsValues?.description}
+            onChange={handleProductValues}
+          />
         </div>
         <div className="form-action">
-          <div className="form-action__submit">
-            <CustomButton variant="secondary" type="submit">
-              <div className="title">Submit</div>
+          <div className="form-action__cancel">
+            <CustomButton variant="danger" type="submit">
+              <div className="title">Cancel</div>
               <div className="icon">
                 <CiHome />
               </div>
             </CustomButton>
           </div>
-          <div className="form-action__cancel">
-            <CustomButton variant="danger" type="submit">
-              <div className="title">Cancel</div>
+          <div className="form-action__submit">
+            <CustomButton variant="secondary" type="submit">
+              <div className="title">Submit</div>
               <div className="icon">
                 <CiHome />
               </div>

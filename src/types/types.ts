@@ -4,6 +4,7 @@ import type {
   ReactNode,
   Dispatch,
   SetStateAction,
+  TextareaHTMLAttributes,
 } from "react";
 export type Props = { children: ReactNode };
 
@@ -67,4 +68,21 @@ export type CardsProps = {
   name: string;
   number: number;
   icon: ReactNode;
+};
+
+export type TextAreaAttributes = {
+  name: string;
+  placeHolder?: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+};
+
+export type ProductsValues = {
+  title: string;
+  price: string;
+  category: string;
+  image: string;
+  description: string;
 };

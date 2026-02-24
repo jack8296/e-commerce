@@ -1,11 +1,21 @@
 import type { JSX } from "react";
-const TextArea = (): JSX.Element => {
+//types
+import type { TextAreaAttributes } from "../../types/types";
+const TextArea = ({
+  name,
+  placeHolder,
+  value,
+  onChange,
+  ...res
+}: TextAreaAttributes): JSX.Element => {
   return (
     <div className="textArea-container">
       <textarea
-        name="textarea"
         id="textarea"
-        placeholder="Descriptiion here..."
+        name={name}
+        placeholder={placeHolder}
+        {...res}
+        onChange={onChange}
       />
     </div>
   );
