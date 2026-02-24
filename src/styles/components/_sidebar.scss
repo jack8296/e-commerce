@@ -65,5 +65,8 @@
   }
   .dropdown-list {
     overflow: hidden;
+    a {
+      color: $text-inverse;
+    }
   }
 }

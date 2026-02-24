@@ -1,0 +1,6 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.user-container {
+  padding: $space-md;
+}

@@ -13,8 +13,8 @@ import { IoBagAddOutline } from "react-icons/io5";
 //types
 import { type SidebarProps } from "../../types/types";
 
-//utilities
-import clsx from "clsx";
+//react-router
+import { Link } from "react-router";
 
 const Sidebar = ({
   setToggleSidebar,
@@ -56,18 +56,22 @@ const Sidebar = ({
               className={`sidebar-dropdown-list ${sidebarName === "products" ? "active" : ""} `}
             >
               <ul className="dropdown-list">
-                <li>
-                  <div className="icon">
-                    <IoBagAddOutline />
-                  </div>
-                  <div className="title">Add products</div>
-                </li>
-                <li>
-                  <div className="icon">
-                    <CiHome />
-                  </div>
-                  <div className="title">Products</div>
-                </li>
+                <Link to="/products/add">
+                  <li>
+                    <div className="icon">
+                      <IoBagAddOutline />
+                    </div>
+                    <div className="title">Add products</div>
+                  </li>
+                </Link>
+                <Link to="/products">
+                  <li>
+                    <div className="icon">
+                      <CiHome />
+                    </div>
+                    <div className="title">Products</div>
+                  </li>
+                </Link>
               </ul>
             </div>
           </div>
@@ -85,18 +89,22 @@ const Sidebar = ({
               className={`sidebar-dropdown-list ${sidebarName === "carts" ? "active" : ""} `}
             >
               <ul className="dropdown-list">
-                <li>
-                  <div className="icon">
-                    <IoBagAddOutline />
-                  </div>
-                  <div className="title">Add Carts</div>
-                </li>
-                <li>
-                  <div className="icon">
-                    <CiHome />
-                  </div>
-                  <div className="title">Carts</div>
-                </li>
+                <Link to="/carts/add">
+                  <li>
+                    <div className="icon">
+                      <IoBagAddOutline />
+                    </div>
+                    <div className="title">Add Carts</div>
+                  </li>
+                </Link>
+                <Link to="/carts">
+                  <li>
+                    <div className="icon">
+                      <CiHome />
+                    </div>
+                    <div className="title">Carts</div>
+                  </li>
+                </Link>
               </ul>
             </div>
           </div>
@@ -114,18 +122,22 @@ const Sidebar = ({
               className={`sidebar-dropdown-list ${sidebarName === "users" ? "active" : ""} `}
             >
               <ul className="dropdown-list">
-                <li>
-                  <div className="icon">
-                    <IoBagAddOutline />
-                  </div>
-                  <div className="title">Add Users</div>
-                </li>
-                <li>
-                  <div className="icon">
-                    <CiHome />
-                  </div>
-                  <div className="title">Users</div>
-                </li>
+                <Link to="/users/add">
+                  <li>
+                    <div className="icon">
+                      <IoBagAddOutline />
+                    </div>
+                    <div className="title">Add Users</div>
+                  </li>
+                </Link>
+                <Link to="/users">
+                  <li>
+                    <div className="icon">
+                      <CiHome />
+                    </div>
+                    <div className="title">Users</div>
+                  </li>
+                </Link>
               </ul>
             </div>
           </div>

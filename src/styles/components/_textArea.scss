@@ -1,0 +1,21 @@
+@use "../abstract/mixins" as *;
+@use "../abstract/variables" as *;
+
+.textArea-container {
+  width: 100%;
+  textarea {
+    width: 100%;
+    background-color: white;
+    padding: $space-md;
+    border: 1px solid rgba($secondary-color, 0.5);
+    color: $text-secondary;
+    border-radius: $radius-sm;
+    height: 6rem;
+    outline: none;
+    margin: $space-md 0;
+    transition: $transition-normal;
+    &:focus {
+      border: 1px solid rgba($secondary-color, 1);
+    }
+  }
+}

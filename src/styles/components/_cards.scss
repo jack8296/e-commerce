@@ -9,6 +9,15 @@
   max-width: 400px;
   width: 100%;
   border-radius: $radius-sm;
+  &.user {
+    background-color: $secondary-color;
+  }
+  &.products {
+    background-color: $primary-color;
+  }
+  &.carts {
+    background-color: rgba($tertiary-color, 0.3);
+  }
   .card-icon {
     font-size: 2rem;
     svg {
@@ -20,4 +29,8 @@
 .card-details {
   color: $text-secondary;
   font-size: $font-size-sm;
+  &__num {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+  }
 }

@@ -1,0 +1,38 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.addProducts-container {
+  padding: $space-md;
+  box-shadow: $shadow-md;
+  border-radius: $radius-md;
+  h2 {
+    color: $text-secondary;
+    padding: $space-lg 0;
+  }
+}
+.forms {
+  width: 100%;
+  .form-top-section {
+    @include flex($justify: flex-start);
+    gap: 1rem;
+    padding: $space-md 0;
+  }
+  .form-bottom-section {
+    @include flex($justify: flex-start);
+    gap: 1rem;
+    padding: $space-md 0;
+  }
+  .form-action {
+    @include flex($justify: space-between);
+    gap: 1rem;
+    padding: $space-md 0;
+    width: 100%;
+    margin: auto;
+    &__cancel {
+      width: 200px;
+    }
+    &__submit {
+      width: 200px;
+    }
+  }
+}
