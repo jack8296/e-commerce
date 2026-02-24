@@ -6,6 +6,9 @@ import CustomButton from "../../components/button/custm.button";
 import TextArea from "../../components/textArea/textArea";
 //icons
 import { CiHome } from "react-icons/ci";
+import { ImCross } from "react-icons/im";
+import { FaSave } from "react-icons/fa";
+
 //types
 import type { ProductsValues } from "../../types/types";
 const AddProducts = (): JSX.Element => {
@@ -27,8 +30,6 @@ const AddProducts = (): JSX.Element => {
     },
     [],
   );
-
-  console.log("values", addProductsValues);
 
   return (
     <div className="addProducts-container">
@@ -79,7 +80,7 @@ const AddProducts = (): JSX.Element => {
             <CustomButton variant="danger" type="submit">
               <div className="title">Cancel</div>
               <div className="icon">
-                <CiHome />
+                <ImCross />
               </div>
             </CustomButton>
           </div>
@@ -87,7 +88,7 @@ const AddProducts = (): JSX.Element => {
             <CustomButton variant="secondary" type="submit">
               <div className="title">Submit</div>
               <div className="icon">
-                <CiHome />
+                <FaSave />
               </div>
             </CustomButton>
           </div>

@@ -30,9 +30,20 @@
     margin: auto;
     &__cancel {
       width: 200px;
+      .icon {
+        width: 13px;
+        height: 13px;
+      }
     }
     &__submit {
       width: 200px;
+      .icon {
+        width: 13px;
+        height: 13px;
+        svg {
+          fill: $text-inverse;
+        }
+      }
     }
   }
 }
