@@ -1,0 +1,15 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.display-container {
+  padding: $space-sm;
+  h2,
+  p {
+    color: $text-secondary;
+  }
+  .cards-section {
+    @include flex($justify: flex-start);
+    gap: 1.5rem;
+    margin: $space-md 0;
+  }
+}

@@ -1,0 +1,23 @@
+@use "../abstract/variables" as *;
+@use "../abstract/mixins" as *;
+
+.card-container {
+  @include flex($justify: space-between);
+  background-color: $secondary-color;
+  box-shadow: $shadow-md;
+  padding: $space-md;
+  max-width: 400px;
+  width: 100%;
+  border-radius: $radius-sm;
+  .card-icon {
+    font-size: 2rem;
+    svg {
+      fill: $text-primary;
+    }
+  }
+}
+
+.card-details {
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}

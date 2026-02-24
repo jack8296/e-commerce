@@ -6,7 +6,8 @@ import { PublicRoute } from "../publicRoute/publicRoute";
 //pages
 import LoginPage from "../../pages/login/login.page";
 import Dashboardpage from "../../pages/dashboard/dashboard.page";
-
+//componetns
+import Display from "../../components/display/display";
 const router = createBrowserRouter([
   {
     element: <PublicRoute />,
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Dashboardpage />,
+        children: [
+          { index: true, element: <Display /> },
+          { path: "/products", element: <h1>I am productpage</h1> },
+        ],
       },
     ],
   },
