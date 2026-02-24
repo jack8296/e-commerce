@@ -17,6 +17,10 @@
       opacity: 1;
       transition: opacity $transition-normal;
     }
+    .arrow-icon {
+      opacity: 1;
+      transition: opacity $transition-normal;
+    }
   }
   &.active {
     grid-template-columns: 69px 1fr;
@@ -26,6 +30,9 @@
       }
       .icon {
         font-size: 1.2rem;
+      }
+      .arrow-icon {
+        opacity: 0;
       }
     }
   }

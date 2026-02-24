@@ -27,6 +27,12 @@
       .title {
         pointer-events: none;
       }
+      .arrow-icon {
+        @include flex($justify: center);
+        font-size: 1.2rem;
+        pointer-events: none;
+        margin-left: auto;
+      }
     }
   }
 }
@@ -46,5 +52,18 @@
       fill: $text-inverse;
       font-size: 1.7rem;
     }
+  }
+}
+.sidebar-dropdown {
+  .sidebar-dropdown-list {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $transition-normal;
+    &.active {
+      grid-template-rows: 1fr;
+    }
+  }
+  .dropdown-list {
+    overflow: hidden;
   }
 }

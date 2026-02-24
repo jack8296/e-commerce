@@ -1,4 +1,4 @@
-import { useCallback, type JSX } from "react";
+import { useCallback, useState, type JSX } from "react";
 //icons
 import { FaShoppingBag } from "react-icons/fa";
 import { CiHome } from "react-icons/ci";
@@ -7,16 +7,30 @@ import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoBagAddOutline } from "react-icons/io5";
+
 //types
 import { type SidebarProps } from "../../types/types";
+
+//utilities
+import clsx from "clsx";
 
 const Sidebar = ({
   setToggleSidebar,
   toggleSidebar,
 }: SidebarProps): JSX.Element => {
+  const [sidebarName, setSidebarName] = useState<string>("");
+
   const handleClose = useCallback(() => {
     setToggleSidebar((prev) => !prev);
+    setSidebarName("");
   }, [setToggleSidebar]);
+
+  const handleOpenSidebar = useCallback((name: string) => {
+    setSidebarName((prev) => (prev === name ? "" : name));
+    setToggleSidebar(false);
+  }, []);
   return (
     <div className="sidebar-container">
       <div className="sidebar-main">
@@ -28,24 +42,93 @@ const Sidebar = ({
           )}
         </div>
         <ul className="lists">
-          <li className="item">
-            <div className="icon">
-              <CiHome />
+          <div className="sidebar-dropdown">
+            <li className="item" onClick={() => handleOpenSidebar("products")}>
+              <div className="icon">
+                <CiHome />
+              </div>
+              <div className="title">Products</div>
+              <div className="arrow-icon">
+                <IoIosArrowUp />
+              </div>
+            </li>
+            <div
+              className={`sidebar-dropdown-list ${sidebarName === "products" ? "active" : ""} `}
+            >
+              <ul className="dropdown-list">
+                <li>
+                  <div className="icon">
+                    <IoBagAddOutline />
+                  </div>
+                  <div className="title">Add products</div>
+                </li>
+                <li>
+                  <div className="icon">
+                    <CiHome />
+                  </div>
+                  <div className="title">Products</div>
+                </li>
+              </ul>
             </div>
-            <div className="title">Products</div>
-          </li>
-          <li className="item">
-            <div className="icon">
-              <FaShoppingBag />
+          </div>
+          <div className="sidebar-dropdown">
+            <li className="item" onClick={() => handleOpenSidebar("carts")}>
+              <div className="icon">
+                <FaShoppingBag />
+              </div>
+              <div className="title">Carts</div>
+              <div className="arrow-icon">
+                <IoIosArrowUp />
+              </div>
+            </li>
+            <div
+              className={`sidebar-dropdown-list ${sidebarName === "carts" ? "active" : ""} `}
+            >
+              <ul className="dropdown-list">
+                <li>
+                  <div className="icon">
+                    <IoBagAddOutline />
+                  </div>
+                  <div className="title">Add Carts</div>
+                </li>
+                <li>
+                  <div className="icon">
+                    <CiHome />
+                  </div>
+                  <div className="title">Carts</div>
+                </li>
+              </ul>
             </div>
-            <div className="title">Carts</div>
-          </li>
-          <li className="item">
-            <div className="icon">
-              <CiUser />
+          </div>
+          <div className="sidebar-dropdown">
+            <li className="item" onClick={() => handleOpenSidebar("users")}>
+              <div className="icon">
+                <CiUser />
+              </div>
+              <div className="title">Users</div>
+              <div className="arrow-icon">
+                <IoIosArrowUp />
+              </div>
+            </li>
+            <div
+              className={`sidebar-dropdown-list ${sidebarName === "users" ? "active" : ""} `}
+            >
+              <ul className="dropdown-list">
+                <li>
+                  <div className="icon">
+                    <IoBagAddOutline />
+                  </div>
+                  <div className="title">Add Users</div>
+                </li>
+                <li>
+                  <div className="icon">
+                    <CiHome />
+                  </div>
+                  <div className="title">Users</div>
+                </li>
+              </ul>
             </div>
-            <div className="title">Users</div>
-          </li>
+          </div>
         </ul>
       </div>
     </div>
