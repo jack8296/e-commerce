@@ -4,9 +4,12 @@
 
 .header-container{
     @include flex($justify:space-between);
+    position: sticky;
+    top:0;
     background: $tertiary-color;
     width: 100%;
     padding: $space-sm;
+    box-shadow: $shadow-md;
     .logo{
         width: 40px;
         height: 40px;

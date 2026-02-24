@@ -1,6 +1,41 @@
 @use "../abstract/variables" as *;
 @use "../abstract/mixins" as *;
 
-.dashboard-page{
-    background: linear-gradient(45deg $secondary-color 0.4%, $secondary-color 1%);
+.dashboard-page {
+  width: 100%;
+  background: linear-gradient(
+    45deg rgba($secondary-color, 0.4),
+    rgba($secondary-color, 1)
+  );
+}
+.main-page-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  transition: grid-template-columns $transition-slow;
+  .lists {
+    .title {
+      opacity: 1;
+      transition: opacity $transition-normal;
+    }
+  }
+  &.active {
+    grid-template-columns: 69px 1fr;
+    .lists {
+      .title {
+        opacity: 0;
+      }
+      .icon {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.page-header {
+  position: sticky;
+  top: 0;
+}
+.page-main {
+  padding: $space-md;
+  font-size: $font-size-sm;
 }

@@ -1,4 +1,10 @@
-import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
+import type {
+  ButtonHTMLAttributes,
+  PropsWithChildren,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 export type Props = { children: ReactNode };
 
 export type LoginValues = {
@@ -25,4 +31,8 @@ export type Token = {
 export type LoginFormError = {
   usernameError: string;
   passwordError: string;
+};
+export type SidebarProps = {
+  toggleSidebar: boolean;
+  setToggleSidebar: Dispatch<SetStateAction<boolean>>;
 };

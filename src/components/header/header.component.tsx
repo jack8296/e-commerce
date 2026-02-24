@@ -1,5 +1,7 @@
+import type { JSX } from "react";
+//images
 import logo from "../../assets/1.jpg";
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <nav className="header-container">
       <div className="logo">

@@ -1,0 +1,50 @@
+@use "../abstract/mixins" as *;
+@use "../abstract/variables" as *;
+
+.sidebar-container {
+  position: sticky;
+  top: 63px;
+  background-color: $tertiary-color;
+  height: calc(100vh - 63.39px);
+  padding: 0 $space-sm;
+  ul {
+    list-style: none;
+    color: $text-inverse;
+    font-size: $font-size-sm;
+    li {
+      @include flex($justify: flex-start);
+      gap: 0.5rem;
+      padding: $space-sm;
+      border-radius: $radius-sm;
+      cursor: pointer;
+      transition: background $transition-normal;
+      &:hover {
+        background: rgba($secondary-color, 0.1);
+      }
+      .icon {
+        font-size: 1.1rem;
+      }
+      .title {
+        pointer-events: none;
+      }
+    }
+  }
+}
+.sidebar-main {
+  position: relative;
+
+  .close-action {
+    @include flex($justify: center);
+    position: absolute;
+    right: -35px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-color: $secondary-color;
+    border-radius: $radius-sm;
+    svg {
+      fill: $text-inverse;
+      font-size: 1.7rem;
+    }
+  }
+}
