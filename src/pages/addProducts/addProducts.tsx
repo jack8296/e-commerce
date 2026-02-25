@@ -5,13 +5,22 @@ import CustomInput from "../../components/input/custom.Input";
 import CustomButton from "../../components/button/custm.button";
 import TextArea from "../../components/textArea/textArea";
 //icons
-import { CiHome } from "react-icons/ci";
 import { ImCross } from "react-icons/im";
 import { FaSave } from "react-icons/fa";
+//toast
 
 //types
 import type { ProductsValues } from "../../types/types";
+//react-query
+import { useMutation } from "@tanstack/react-query";
+//services
+import { addProducts } from "../../services/products/products";
+//react-router
+import { useNavigate } from "react-router";
+
+import { toast } from "react-toastify";
 const AddProducts = (): JSX.Element => {
+  const navigate = useNavigate();
   const [addProductsValues, setAddProductsValues] = useState<ProductsValues>({
     title: "",
     price: "",
@@ -30,6 +39,39 @@ const AddProducts = (): JSX.Element => {
     },
     [],
   );
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: addProducts,
+    onSuccess: () => {
+      toast.success("Product add succesfully");
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
+  const handleSubmitData = useCallback(() => {
+    console.log(addProductsValues);
+
+    if (
+      addProductsValues.title === "" ||
+      addProductsValues.category === "" ||
+      addProductsValues.price === "" ||
+      addProductsValues.image === ""
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+    const body = {
+      id: Math.random() * 10,
+      title: addProductsValues.title,
+      price: addProductsValues.price,
+      description: addProductsValues.description,
+      category: addProductsValues.category,
+      image: addProductsValues.image,
+    };
+    mutate(body);
+  }, [addProductsValues]);
 
   return (
     <div className="addProducts-container">
@@ -77,15 +119,23 @@ const AddProducts = (): JSX.Element => {
         </div>
         <div className="form-action">
           <div className="form-action__cancel">
-            <CustomButton variant="danger" type="submit">
+            <CustomButton
+              variant="danger"
+              type="submit"
+              onClick={() => navigate("/")}
+            >
               <div className="title">Cancel</div>
               <div className="icon">
                 <ImCross />
               </div>
             </CustomButton>
           </div>
-          <div className="form-action__submit">
-            <CustomButton variant="secondary" type="submit">
+          <div className="form-action__submit" onClick={handleSubmitData}>
+            <CustomButton
+              variant="secondary"
+              type="submit"
+              disabled={isPending}
+            >
               <div className="title">Submit</div>
               <div className="icon">
                 <FaSave />
