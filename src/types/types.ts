@@ -1,10 +1,10 @@
+import React from "react";
 import type {
   ButtonHTMLAttributes,
   PropsWithChildren,
   ReactNode,
   Dispatch,
   SetStateAction,
-  TextareaHTMLAttributes,
 } from "react";
 export type Props = { children: ReactNode };
 
@@ -85,4 +85,25 @@ export type ProductsValues = {
   category: string;
   image: string;
   description: string;
+};
+
+export type SelectProps = {
+  name: string;
+  data: string[];
+  placeHolder: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void;
+};
+
+export type FilterData = {
+  title: string;
+  category: string;
+  filterBy: string;
+  price: string;
+};
+
+export type TableProps = {
+  header: string[];
+  data: string[];
 };

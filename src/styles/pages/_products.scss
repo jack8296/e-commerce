@@ -4,3 +4,21 @@
 .products-container {
   padding: $space-md;
 }
+
+.product-filter {
+  @include flex($justify: flex-start);
+  gap: 1rem;
+  margin: $space-lg 0;
+  .search {
+    flex: 1;
+  }
+  .filter-by-category {
+    flex: 1;
+  }
+  .filter-by-acen {
+    flex: 1;
+  }
+  .filter-by-price {
+    flex: 1;
+  }
+}

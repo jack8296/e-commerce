@@ -1,0 +1,22 @@
+@use "../abstract/mixins" as *;
+@use "../abstract/variables" as *;
+
+.select-container {
+  @include flex($justify: center);
+  width: 100%;
+  &__select {
+    width: 100%;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    padding: $space-sm;
+    border: 1px solid rgba($secondary-color, 0.5);
+    outline: none;
+    transition: border-color $transition-fast;
+    &:focus {
+      border-color: $secondary-color;
+    }
+  }
+  &__option {
+    color: $text-secondary;
+  }
+}

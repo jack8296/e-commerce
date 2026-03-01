@@ -47,7 +47,7 @@ const LoginPage = () => {
     onSuccess: (response) => {
       dispatch(setToken(response.token));
       setItem(response.token);
-      toast.success("Product add successful!");
+      toast.success("Login successful!");
     },
     onError: (error) => {
       toast.error(error?.message);

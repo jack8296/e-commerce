@@ -48,7 +48,9 @@ const Sidebar = ({
                 <CiHome />
               </div>
               <div className="title">Products</div>
-              <div className="arrow-icon">
+              <div
+                className={`arrow-icons ${sidebarName === "products" ? "active" : ""}`}
+              >
                 <IoIosArrowUp />
               </div>
             </li>
@@ -81,7 +83,9 @@ const Sidebar = ({
                 <FaShoppingBag />
               </div>
               <div className="title">Carts</div>
-              <div className="arrow-icon">
+              <div
+                className={`arrow-icons ${sidebarName === "carts" ? "active" : ""}`}
+              >
                 <IoIosArrowUp />
               </div>
             </li>
@@ -114,7 +118,9 @@ const Sidebar = ({
                 <CiUser />
               </div>
               <div className="title">Users</div>
-              <div className="arrow-icon">
+              <div
+                className={`arrow-icons ${sidebarName === "users" ? "active" : ""}`}
+              >
                 <IoIosArrowUp />
               </div>
             </li>

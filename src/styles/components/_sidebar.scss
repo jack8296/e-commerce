@@ -27,11 +27,16 @@
       .title {
         pointer-events: none;
       }
-      .arrow-icon {
+      .arrow-icons {
         @include flex($justify: center);
         font-size: 1.2rem;
         pointer-events: none;
         margin-left: auto;
+        transition: all $transition-slow;
+        &.active {
+          transition: all $transition-slow;
+          transform: rotate(181deg);
+        }
       }
     }
   }
