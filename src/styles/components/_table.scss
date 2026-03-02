@@ -1,0 +1,79 @@
+@use "../abstract/mixins" as *;
+@use "../abstract/variables" as *;
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: $space-md;
+  .table-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 600px;
+    border-radius: $radius-md;
+    overflow: hidden;
+    th,
+    td {
+      padding: $space-sm;
+      text-align: left;
+    }
+    th {
+      background-color: $tertiary-color;
+      color: $text-inverse;
+      text-transform: capitalize;
+    }
+    tr {
+      border-radius: $radius-md;
+    }
+    tr:nth-child(even) {
+      background-color: $secondary-color;
+    }
+  }
+  .table-action {
+    font-size: 1.3rem;
+    .action-wrapper {
+      @include flex($justify: center);
+      gap: $space-sm;
+    }
+    .table-edit {
+      cursor: pointer;
+      svg {
+        fill: $tertiary-color;
+      }
+      &:hover {
+        svg {
+          fill: rgba($tertiary-color, 0.8);
+        }
+      }
+    }
+    .table-delete {
+      cursor: pointer;
+      svg {
+        fill: $color-error;
+      }
+      &:hover {
+        svg {
+          fill: rgba($color-error, 0.8);
+        }
+      }
+    }
+  }
+  .table-pagination {
+    max-width: 200px;
+    margin-left: auto;
+    margin-top: $space-sm;
+  }
+}
+.delete-action {
+  @include flex($justify: space-between);
+  gap: $space-sm;
+  .icon {
+    svg {
+      fill: $text-inverse;
+    }
+  }
+}

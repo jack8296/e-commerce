@@ -1,36 +1,34 @@
 @use "../abstract/variables" as *;
 @use "../abstract/mixins" as *;
 
-
-.header-container{
-    @include flex($justify:space-between);
-    position: sticky;
-    top:0;
-    background: $tertiary-color;
-    width: 100%;
-    padding: $space-sm;
-    box-shadow: $shadow-md;
-    .logo{
-        width: 40px;
-        height: 40px;
-        img{
-            max-width: 100%;
-            width: 100%;
-            object-fit: contain;
-            border-radius: $radius-full;
-
-        }
+.header-container {
+  @include flex($justify: space-between);
+  position: sticky;
+  top: 0;
+  background: $tertiary-color;
+  width: 100%;
+  padding: $space-sm;
+  box-shadow: $shadow-md;
+  z-index: 1;
+  .logo {
+    width: 40px;
+    height: 40px;
+    img {
+      max-width: 100%;
+      width: 100%;
+      object-fit: contain;
+      border-radius: $radius-full;
     }
-    .username{
-        @include flex($justify:center);
-        background-color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: $radius-full;
-        font-size: $font-size-md;
-        font-weight: $font-weight-bold;
-        color: $text-secondary;
-        cursor: pointer;
-    }
+  }
+  .username {
+    @include flex($justify: center);
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $text-secondary;
+    cursor: pointer;
+  }
 }
-

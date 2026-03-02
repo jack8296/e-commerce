@@ -106,3 +106,10 @@ export type FilterData = {
 export type TableProps<T> = {
   data: T[];
 };
+
+export type DeleteModalProps = {
+  title: string;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  children?: React.ReactNode;
+};

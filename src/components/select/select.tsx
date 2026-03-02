@@ -21,7 +21,11 @@ const Select = ({
         <option value="">{placeHolder}</option>
         {data.map((data) => {
           return (
-            <option className="select-container__option" value={data}>
+            <option
+              className="select-container__option"
+              value={data}
+              key={data}
+            >
               {data}
             </option>
           );
