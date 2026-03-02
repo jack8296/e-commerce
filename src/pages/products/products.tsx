@@ -1,10 +1,14 @@
 import { useCallback, useState, type JSX } from "react";
+//react-query
+import { useQuery } from "@tanstack/react-query";
 //components
 import CustomInput from "../../components/input/custom.Input";
 import Select from "../../components/select/select";
 import Table from "../../components/table/table";
 //types
-import { type FilterData } from "../../types/types";
+import { type FilterData, type TableProps } from "../../types/types";
+//services
+import { allProducts } from "../../services/products/products";
 
 const Products = (): JSX.Element => {
   const [filterDatas, setFilterDatas] = useState<FilterData>({
@@ -27,6 +31,14 @@ const Products = (): JSX.Element => {
     },
     [],
   );
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: allProducts,
+  });
   return (
     <div className="products-container">
       <h2>Products Details</h2>
@@ -67,7 +79,13 @@ const Products = (): JSX.Element => {
       </div>
       <div className="product-details">
         <h3>Products table</h3>
-        <Table data={[]} header={[]} />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error fetching products</p>
+        ) : (
+          <Table data={(products as object[]) || []} />
+        )}
       </div>
     </div>
   );

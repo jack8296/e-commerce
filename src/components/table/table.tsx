@@ -1,28 +1,45 @@
-import { type JSX } from "react";
 //types
 import { type TableProps } from "../../types/types";
+//helpers
+import { isValidUrl } from "../../helpers/urlCheck";
 
-const Table = ({ header, data }: TableProps): JSX.Element => {
+function Table<T extends object>({ data }: TableProps<T>) {
+  if (!data || data.length === 0) {
+    return <p>No data found</p>;
+  }
   return (
-    <div className="table-container" style={{ overflow: "auto" }}>
+    <div className="table-container">
       <table>
         <thead>
-          {header.map((data) => (
-            <tr>
-              <th>Nabaraj</th>
-              <th>Nabaraj</th>
-              <th>Nabaraj</th>
-            </tr>
-          ))}
+          <tr>
+            {Object.keys(data[0]).map((key) => (
+              <th key={key}>{key}</th>
+            ))}
+          </tr>
         </thead>
         <tbody>
-          <td>akk</td>
-          <td>akk</td>
-          <td>akk</td>
+          {data &&
+            data.map((row, index) => (
+              <tr key={index}>
+                {Object.values(row).map((value, idx) => {
+                  if (typeof value === "object" && value !== null) {
+                    return <td key={idx}>{value?.rate}</td>;
+                  } else if (isValidUrl(value)) {
+                    return (
+                      <td key={idx}>
+                        <img src={value} alt="Image" />
+                      </td>
+                    );
+                  } else {
+                    return <td key={idx}>{value}</td>;
+                  }
+                })}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
   );
-};
+}
 
 export default Table;

@@ -103,7 +103,6 @@ export type FilterData = {
   price: string;
 };
 
-export type TableProps = {
-  header: string[];
-  data: string[];
+export type TableProps<T> = {
+  data: T[];
 };
