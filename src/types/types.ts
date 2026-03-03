@@ -80,6 +80,7 @@ export type TextAreaAttributes = {
 };
 
 export type ProductsValues = {
+  id: number;
   title: string;
   price: string;
   category: string;
@@ -115,6 +116,7 @@ export type DeleteModalProps = {
 };
 
 export type EditProductValues = {
+  id: number;
   title: string;
   price: number;
   category: string;

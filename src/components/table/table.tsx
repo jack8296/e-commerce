@@ -15,20 +15,30 @@ import CustomButton from "../button/custm.button";
 import { useCallback, useState } from "react";
 import CustomInput from "../input/custom.Input";
 import TextArea from "../textArea/textArea";
+//services
+import { updateProducts } from "../../services/products/products";
+//react-query
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryClient } from "../../app/query/queryClient";
+import { toast } from "react-toastify";
 
 function Table<T extends object>({ data }: TableProps<T>) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [editProductValues, setEditProductValues] = useState<EditProductValues>(
     {
+      id: 0,
       title: "",
       price: 0,
       category: "",
       image: "",
       description: "",
-      rating: { rate: 0, count: 0 },
+      rating: { rate: 0 },
     },
   );
+  const paginationOptions = [];
+  const queryClient = useQueryClient();
+
   if (!data || data.length === 0) {
     return <p>No data found</p>;
   }
@@ -43,12 +53,13 @@ function Table<T extends object>({ data }: TableProps<T>) {
   const handleOpenUpdateModal = useCallback(
     (data: EditProductValues) => {
       setEditProductValues({
+        id: data.id,
         title: data.title,
         price: data.price,
         category: data.category,
         image: data.image,
         description: data.description,
-        rating: data.rating ?? { rate: 0, count: 0 },
+        rating: data.rating ?? { rate: 0 },
       });
       setIsUpdateModalOpen(true);
     },
@@ -80,8 +91,31 @@ function Table<T extends object>({ data }: TableProps<T>) {
     [],
   );
 
-  console.log(editProductValues);
+  for (let i = 4; i <= data.length; i += 4) {
+    paginationOptions.push(String(i));
+  }
+  const { mutate: updateProduct } = useMutation({
+    mutationFn: updateProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Product updated successfully");
+      setIsUpdateModalOpen(false);
+    },
+  });
 
+  const handleUpdateProduct = useCallback(() => {
+    const { title, price, category, image, description, id } =
+      editProductValues;
+    const data = {
+      id,
+      title,
+      price: String(price),
+      category,
+      image,
+      description,
+    };
+    updateProduct(data);
+  }, [editProductValues, updateProduct]);
   return (
     <>
       <DeleteModal
@@ -170,7 +204,11 @@ function Table<T extends object>({ data }: TableProps<T>) {
               <MdOutlineCancel />
             </div>
           </CustomButton>
-          <CustomButton variant="secondary" type="submit" onClick={() => {}}>
+          <CustomButton
+            variant="secondary"
+            type="submit"
+            onClick={handleUpdateProduct}
+          >
             <div className="title">Update</div>
             <div className="icon">
               <MdDeleteOutline />
@@ -213,7 +251,9 @@ function Table<T extends object>({ data }: TableProps<T>) {
                     <div className="action-wrapper">
                       <div
                         className="table-edit"
-                        onClick={() => handleOpenUpdateModal(row)}
+                        onClick={() =>
+                          handleOpenUpdateModal(row as EditProductValues)
+                        }
                       >
                         <FaEdit />
                       </div>
@@ -232,7 +272,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
         <div className="table-pagination">
           <Select
             onChange={() => {}}
-            data={["4", "7", "10", "15", "20"]}
+            data={paginationOptions}
             name="price"
             placeHolder="Select number of rows"
           />
