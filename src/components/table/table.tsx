@@ -19,6 +19,7 @@ import TextArea from "../textArea/textArea";
 import {
   updateProducts,
   deleteProducts,
+  limitProducts,
 } from "../../services/products/products";
 //react-query
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,7 +28,6 @@ import { toast } from "react-toastify";
 function Table<T extends object>({ data }: TableProps<T>) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
-  const [paginateValue, setPaginateValue] = useState<number>(data.length);
   const [editProductValues, setEditProductValues] = useState<EditProductValues>(
     {
       id: 0,
@@ -94,7 +94,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
     [],
   );
 
-  for (let i = 4; i <= data.length; i += 4) {
+  for (let i = 4; i <= 20; i += 4) {
     paginationOptions.push(String(i));
   }
   const { mutate: updateProduct, isPending: isUpdatePending } = useMutation({
@@ -114,6 +114,14 @@ function Table<T extends object>({ data }: TableProps<T>) {
       setIsDeleteModalOpen(false);
     },
   });
+
+  const { mutate: limitProduct } = useMutation({
+    mutationFn: limitProducts,
+    onSuccess: (data) => {
+      queryClient.setQueryData(["products"], data);
+    },
+  });
+
   const handleUpdateProduct = useCallback(() => {
     const { title, price, category, image, description, id } =
       editProductValues;
@@ -137,11 +145,11 @@ function Table<T extends object>({ data }: TableProps<T>) {
 
   const handlePaginateChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      setPaginateValue(Number(e.target.value));
+      limitProduct(Number(e.target.value));
     },
     [],
   );
-  console.log(paginateValue);
+
   return (
     <>
       <DeleteModal

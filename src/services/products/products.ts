@@ -23,3 +23,8 @@ export const deleteProducts = async (id: number): Promise<unknown> => {
   const response = await api(`${APIS.PRODUCTS}/${id}`, "DELETE");
   return response;
 };
+
+export const limitProducts = async (limit: number): Promise<unknown> => {
+  const response = await api(`${APIS.PRODUCTS}?limit=${limit}`, "GET");
+  return response;
+};
