@@ -18,3 +18,8 @@ export const updateProducts = async (
   const response = await api(`${APIS.PRODUCTS}/${data.id}`, "PUT", data);
   return response;
 };
+
+export const deleteProducts = async (id: number): Promise<unknown> => {
+  const response = await api(`${APIS.PRODUCTS}/${id}`, "DELETE");
+  return response;
+};

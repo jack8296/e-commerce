@@ -16,10 +16,12 @@ import { useCallback, useState } from "react";
 import CustomInput from "../input/custom.Input";
 import TextArea from "../textArea/textArea";
 //services
-import { updateProducts } from "../../services/products/products";
+import {
+  updateProducts,
+  deleteProducts,
+} from "../../services/products/products";
 //react-query
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryClient } from "../../app/query/queryClient";
 import { toast } from "react-toastify";
 
 function Table<T extends object>({ data }: TableProps<T>) {
@@ -103,6 +105,14 @@ function Table<T extends object>({ data }: TableProps<T>) {
     },
   });
 
+  const { mutate: deleteProduct } = useMutation({
+    mutationFn: deleteProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Product deleted successfully");
+      setIsDeleteModalOpen(false);
+    },
+  });
   const handleUpdateProduct = useCallback(() => {
     const { title, price, category, image, description, id } =
       editProductValues;
@@ -116,6 +126,14 @@ function Table<T extends object>({ data }: TableProps<T>) {
     };
     updateProduct(data);
   }, [editProductValues, updateProduct]);
+
+  const handleDeleteProduct = useCallback(
+    (id: number) => {
+      deleteProduct(id);
+    },
+    [deleteProduct],
+  );
+
   return (
     <>
       <DeleteModal
@@ -134,7 +152,11 @@ function Table<T extends object>({ data }: TableProps<T>) {
               <MdOutlineCancel />
             </div>
           </CustomButton>
-          <CustomButton variant="secondary" type="submit" onClick={() => {}}>
+          <CustomButton
+            variant="secondary"
+            type="submit"
+            onClick={() => handleDeleteProduct(editProductValues.id)}
+          >
             <div className="title">Delete</div>
             <div className="icon">
               <MdDeleteOutline />
