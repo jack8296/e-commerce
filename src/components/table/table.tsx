@@ -27,6 +27,7 @@ import { toast } from "react-toastify";
 function Table<T extends object>({ data }: TableProps<T>) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
+  const [paginateValue, setPaginateValue] = useState<number>(data.length);
   const [editProductValues, setEditProductValues] = useState<EditProductValues>(
     {
       id: 0,
@@ -134,6 +135,13 @@ function Table<T extends object>({ data }: TableProps<T>) {
     [deleteProduct],
   );
 
+  const handlePaginateChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      setPaginateValue(Number(e.target.value));
+    },
+    [],
+  );
+  console.log(paginateValue);
   return (
     <>
       <DeleteModal
@@ -295,7 +303,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
         </table>
         <div className="table-pagination">
           <Select
-            onChange={() => {}}
+            onChange={handlePaginateChange}
             data={paginationOptions}
             name="price"
             placeHolder="Select number of rows"
