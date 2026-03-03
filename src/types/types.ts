@@ -113,3 +113,14 @@ export type DeleteModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   children?: React.ReactNode;
 };
+
+export type EditProductValues = {
+  title: string;
+  price: number;
+  category: string;
+  image: string;
+  description: string;
+  rating?: {
+    rate: number;
+  };
+};

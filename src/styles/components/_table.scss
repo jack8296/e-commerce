@@ -77,3 +77,19 @@
     }
   }
 }
+
+.edit-form {
+  margin-top: $space-md;
+  .edit-form-input-section {
+    padding: $space-md 0;
+  }
+}
+.edit-action {
+  @include flex($justify: space-between);
+  gap: $space-sm;
+  .icon {
+    svg {
+      fill: $text-inverse;
+    }
+  }
+}

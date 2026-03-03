@@ -13,6 +13,7 @@ const TextArea = ({
       <textarea
         id="textarea"
         name={name}
+        value={value}
         placeholder={placeHolder}
         {...res}
         onChange={onChange}

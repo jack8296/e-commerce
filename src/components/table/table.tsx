@@ -1,5 +1,5 @@
 //types
-import { type TableProps } from "../../types/types";
+import { type TableProps, type EditProductValues } from "../../types/types";
 //helpers
 import { isValidUrl } from "../../helpers/urlCheck";
 //icons
@@ -13,9 +13,22 @@ import Select from "../select/select";
 import DeleteModal from "../modal/delete/deleteModal";
 import CustomButton from "../button/custm.button";
 import { useCallback, useState } from "react";
+import CustomInput from "../input/custom.Input";
+import TextArea from "../textArea/textArea";
 
 function Table<T extends object>({ data }: TableProps<T>) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
+  const [editProductValues, setEditProductValues] = useState<EditProductValues>(
+    {
+      title: "",
+      price: 0,
+      category: "",
+      image: "",
+      description: "",
+      rating: { rate: 0, count: 0 },
+    },
+  );
   if (!data || data.length === 0) {
     return <p>No data found</p>;
   }
@@ -26,6 +39,48 @@ function Table<T extends object>({ data }: TableProps<T>) {
   const handleCloseDeleteModal = useCallback(() => {
     setIsDeleteModalOpen(false);
   }, [isDeleteModalOpen]);
+
+  const handleOpenUpdateModal = useCallback(
+    (data: EditProductValues) => {
+      setEditProductValues({
+        title: data.title,
+        price: data.price,
+        category: data.category,
+        image: data.image,
+        description: data.description,
+        rating: data.rating ?? { rate: 0, count: 0 },
+      });
+      setIsUpdateModalOpen(true);
+    },
+    [isUpdateModalOpen],
+  );
+
+  const handleCloseUpdateModal = useCallback(() => {
+    setIsUpdateModalOpen(false);
+  }, [isUpdateModalOpen]);
+
+  const handleEditProductValues = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      console.log(name);
+      if (name === "rating") {
+        setEditProductValues((prev) => ({
+          ...prev,
+          rating: {
+            rate: Number(value),
+          },
+        }));
+      } else {
+        setEditProductValues((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
+    },
+    [],
+  );
+
+  console.log(editProductValues);
 
   return (
     <>
@@ -47,6 +102,76 @@ function Table<T extends object>({ data }: TableProps<T>) {
           </CustomButton>
           <CustomButton variant="secondary" type="submit" onClick={() => {}}>
             <div className="title">Delete</div>
+            <div className="icon">
+              <MdDeleteOutline />
+            </div>
+          </CustomButton>
+        </div>
+      </DeleteModal>
+      <DeleteModal
+        title="Are you sure you want to update this product? "
+        isOpen={isUpdateModalOpen}
+        setIsOpen={setIsUpdateModalOpen}
+      >
+        <form className="edit-form">
+          <div className="edit-form-input-section">
+            <CustomInput
+              label="Title"
+              type="text"
+              name="title"
+              value={editProductValues?.title}
+              onChange={handleEditProductValues}
+            />
+          </div>
+          <div className="edit-form-input-section">
+            <CustomInput
+              label="Price"
+              type="number"
+              name="price"
+              value={String(editProductValues?.price)}
+              onChange={handleEditProductValues}
+            />
+          </div>
+          <div className="edit-form-input-section">
+            <CustomInput
+              label="Category"
+              type="text"
+              name="category"
+              value={editProductValues?.category}
+              onChange={handleEditProductValues}
+            />
+          </div>
+          <div className="edit-form-input-section">
+            <CustomInput
+              label="Rating"
+              type="number"
+              name="rating"
+              value={String(editProductValues?.rating?.rate)}
+              onChange={handleEditProductValues}
+            />
+          </div>
+          <div className="edit-form-des">
+            <TextArea
+              name="description"
+              placeHolder="Description goes here..."
+              value={editProductValues?.description}
+              onChange={handleEditProductValues}
+            />
+          </div>
+        </form>
+        <div className="edit-action">
+          <CustomButton
+            variant="danger"
+            type="submit"
+            onClick={handleCloseUpdateModal}
+          >
+            <div className="title">Cancel</div>
+            <div className="icon">
+              <MdOutlineCancel />
+            </div>
+          </CustomButton>
+          <CustomButton variant="secondary" type="submit" onClick={() => {}}>
+            <div className="title">Update</div>
             <div className="icon">
               <MdDeleteOutline />
             </div>
@@ -86,7 +211,10 @@ function Table<T extends object>({ data }: TableProps<T>) {
                   })}
                   <td className="table-action">
                     <div className="action-wrapper">
-                      <div className="table-edit">
+                      <div
+                        className="table-edit"
+                        onClick={() => handleOpenUpdateModal(row)}
+                      >
                         <FaEdit />
                       </div>
                       <div
