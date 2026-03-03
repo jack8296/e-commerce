@@ -96,7 +96,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
   for (let i = 4; i <= data.length; i += 4) {
     paginationOptions.push(String(i));
   }
-  const { mutate: updateProduct } = useMutation({
+  const { mutate: updateProduct, isPending: isUpdatePending } = useMutation({
     mutationFn: updateProducts,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -105,7 +105,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
     },
   });
 
-  const { mutate: deleteProduct } = useMutation({
+  const { mutate: deleteProduct, isPending: isDeletePending } = useMutation({
     mutationFn: deleteProducts,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -156,6 +156,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
             variant="secondary"
             type="submit"
             onClick={() => handleDeleteProduct(editProductValues.id)}
+            disabled={isDeletePending}
           >
             <div className="title">Delete</div>
             <div className="icon">
@@ -230,6 +231,7 @@ function Table<T extends object>({ data }: TableProps<T>) {
             variant="secondary"
             type="submit"
             onClick={handleUpdateProduct}
+            disabled={isUpdatePending}
           >
             <div className="title">Update</div>
             <div className="icon">
