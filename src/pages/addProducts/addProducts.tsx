@@ -21,7 +21,9 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 const AddProducts = (): JSX.Element => {
   const navigate = useNavigate();
-  const [addProductsValues, setAddProductsValues] = useState<ProductsValues>({
+  const [addProductsValues, setAddProductsValues] = useState<
+    Omit<ProductsValues, "id">
+  >({
     title: "",
     price: "",
     category: "",

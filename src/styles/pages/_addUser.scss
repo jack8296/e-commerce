@@ -3,4 +3,34 @@
 
 .addUser-container {
   padding: $space-md;
+  box-shadow: $shadow-md;
+  border-radius: $radius-md;
+}
+.addUser-form {
+  margin: $space-lg auto;
+  &__input {
+    padding: $space-md 0;
+  }
+}
+.addUser-form-action {
+  @include flex($justify: space-between);
+  gap: 1rem;
+  margin-top: $space-lg;
+  &__cancel {
+    width: 200px;
+    .icon {
+      width: 13px;
+      height: 13px;
+    }
+  }
+  &__submit {
+    width: 200px;
+    .icon {
+      width: 13px;
+      height: 13px;
+      svg {
+        fill: $text-inverse;
+      }
+    }
+  }
 }
