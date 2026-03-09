@@ -6,4 +6,5 @@ export const APIS = {
   LOGIN: "/auth/login",
   ONE_USER: "/users",
   PRODUCTS: "/products",
+  ADD_USER: "/users",
 };

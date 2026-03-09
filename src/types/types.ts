@@ -1,4 +1,5 @@
 import React from "react";
+import AddUser from "../pages/addUser/addUser";
 import type {
   ButtonHTMLAttributes,
   PropsWithChildren,
@@ -125,4 +126,10 @@ export type EditProductValues = {
   rating?: {
     rate: number;
   };
+};
+
+export type AddUserValues = {
+  username: string;
+  email: string;
+  password: string;
 };

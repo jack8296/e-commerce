@@ -21,7 +21,6 @@ const CustomInput = ({
     <div className="input-group">
       <input
         type={type === "password" && showPassword ? "text" : type}
-        id="custom-input"
         className="custom-input"
         name={name}
         value={value}
