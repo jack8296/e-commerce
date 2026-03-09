@@ -4,3 +4,8 @@
 .user-container {
   padding: $space-md;
 }
+.user-filter {
+  @include flex($justify: space-between);
+  gap: 1rem;
+  padding: $space-lg 0;
+}

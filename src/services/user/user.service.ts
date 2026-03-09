@@ -12,3 +12,8 @@ export const AddSingleUser = async <T>(body: AddUserValues): Promise<T> => {
   const response = await api<T>(APIS.ADD_USER, "POST", body);
   return response;
 };
+
+export const GetAllUsers = async <T>(): Promise<T[]> => {
+  const response = await api<T[]>(APIS.ALL_USERS, "GET");
+  return response;
+};
