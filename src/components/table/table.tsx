@@ -26,6 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 function Table<T extends object>({ data }: TableProps<T>) {
+  console.log("data in table", data);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [editProductValues, setEditProductValues] = useState<EditProductValues>(

@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import CustomInput from "../../components/input/custom.Input";
 import CustomButton from "../../components/button/custm.button";
 //types
-import type { LoginValues, LoginFormError } from "../../types/types";
+import type { LoginValues } from "../../types/types";
 //icons
 import { IoLogInOutline } from "react-icons/io5";
 //services

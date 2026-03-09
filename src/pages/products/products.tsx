@@ -1,4 +1,4 @@
-import { useCallback, useState, type JSX } from "react";
+import { useCallback, useMemo, useState, type JSX } from "react";
 //react-query
 import { useQuery } from "@tanstack/react-query";
 //components
@@ -6,30 +6,27 @@ import CustomInput from "../../components/input/custom.Input";
 import Select from "../../components/select/select";
 import Table from "../../components/table/table";
 //types
-import { type FilterData, type TableProps } from "../../types/types";
+import { type ProductsValues } from "../../types/types";
+import { type RootState } from "../../app/store/store";
+
 //services
 import { allProducts } from "../../services/products/products";
+//redux
+import { useSelector, useDispatch } from "react-redux";
+//features
+import { setFilterData } from "../../features/products/product.slice";
 
 const Products = (): JSX.Element => {
-  const [filterDatas, setFilterDatas] = useState<FilterData>({
-    title: "",
-    category: "",
-    filterBy: "",
-    price: "",
-  });
-  const data: string[] = ["men", "women"];
   const priceData: string[] = ["Low", "High"];
   const filterData: string[] = ["Accending", "Decending"];
-
+  const dispatch = useDispatch();
+  const filterDataFromRedux = useSelector((state: RootState) => state.product);
   const handleChangeValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-      setFilterDatas((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      dispatch(setFilterData({ name, value }));
     },
-    [],
+    [dispatch],
   );
   const {
     data: products,
@@ -39,6 +36,59 @@ const Products = (): JSX.Element => {
     queryKey: ["products"],
     queryFn: allProducts,
   });
+
+  const productCategories = useMemo(() => {
+    if (!products || !Array.isArray(products)) return [];
+    return [
+      ...new Set(products.map((product: ProductsValues) => product.category)),
+    ];
+  }, [products]);
+
+  const filterDatas = useMemo(() => {
+    if (!products || !Array.isArray(products)) return [];
+    let filteredProducts = [...products];
+    if (filterDataFromRedux.title) {
+      filteredProducts = filteredProducts.filter((product: ProductsValues) =>
+        product.title
+          .toLocaleLowerCase()
+          .includes(filterDataFromRedux.title.toLocaleLowerCase()),
+      );
+    }
+    if (filterDataFromRedux.category) {
+      filteredProducts = filteredProducts.filter((product: ProductsValues) =>
+        product.category
+          .toLocaleLowerCase()
+          .includes(filterDataFromRedux.category.toLocaleLowerCase()),
+      );
+    }
+    if (filterDataFromRedux.filterBy) {
+      if (filterDataFromRedux.filterBy === "Accending") {
+        filteredProducts.sort(
+          (a: ProductsValues, b: ProductsValues) =>
+            Number(a.price) - Number(b.price),
+        );
+      }
+      if (filterDataFromRedux.filterBy === "Decending") {
+        filteredProducts.sort(
+          (a: ProductsValues, b: ProductsValues) =>
+            Number(b.price) - Number(a.price),
+        );
+      }
+    }
+    if (filterDataFromRedux.price) {
+      if (filterDataFromRedux.price === "Low") {
+        filteredProducts = filteredProducts.filter(
+          (product: ProductsValues) => Number(product.price) < 100,
+        );
+      }
+      if (filterDataFromRedux.price === "High") {
+        filteredProducts = filteredProducts.filter(
+          (product: ProductsValues) => Number(product.price) >= 100,
+        );
+      }
+    }
+    return filteredProducts;
+  }, [products, filterDataFromRedux]);
   return (
     <div className="products-container">
       <h2>Products Details</h2>
@@ -48,14 +98,14 @@ const Products = (): JSX.Element => {
             label="Title"
             type="text"
             name="title"
-            value={filterDatas?.title}
+            value={filterDataFromRedux?.title}
             onChange={handleChangeValue}
           />
         </div>
         <div className="filter-by-category">
           <Select
             onChange={handleChangeValue}
-            data={data}
+            data={productCategories}
             name="category"
             placeHolder="Select a Category"
           />
@@ -83,8 +133,10 @@ const Products = (): JSX.Element => {
           <p>Loading...</p>
         ) : error ? (
           <p>Error fetching products</p>
+        ) : filterDatas.length > 0 ? (
+          <Table data={filterDatas ?? []} />
         ) : (
-          <Table data={(products as object[]) || []} />
+          <p>No products found</p>
         )}
       </div>
     </div>
