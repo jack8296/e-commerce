@@ -3,17 +3,30 @@ import { useMemo, useState } from "react";
 //components
 import CustomInput from "../../components/input/custom.Input";
 import Select from "../../components/select/select";
+import Table from "../../components/common/table";
 //react-query
 import { useQuery } from "@tanstack/react-query";
 //services
 import { GetAllUsers } from "../../services/user/user.service";
+//icons
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const Users = (): JSX.Element => {
   const [userValue, setUserValue] = useState({
     search: "",
     filter: "",
   });
-
+  const headers = [
+    "ID",
+    "Name",
+    "Email",
+    "Phone",
+    "Address",
+    "Zipcode",
+    "Password",
+    "Actions",
+  ];
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -73,6 +86,34 @@ const Users = (): JSX.Element => {
           placeHolder="Filter by Address"
           onChange={handleInputChange}
         />
+      </div>
+      <div className="user-table">
+        <h3>Users table</h3>
+        {filteredUsers.length === 0 ? (
+          <p>No users found</p>
+        ) : (
+          <Table headers={headers}>
+            {filteredUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{`${user.name.firstname} ${user.name.lastname}`}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{`${user.address.city}, ${user.address.street}`}</td>
+                <td>{user.address.zipcode}</td>
+                <td>{user.password}</td>
+                <td className="action-btn">
+                  <span className="action-btn__edit">
+                    <FaEdit />
+                  </span>
+                  <span className="action-btn__delete">
+                    <MdDeleteForever />
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </Table>
+        )}
       </div>
     </div>
   );

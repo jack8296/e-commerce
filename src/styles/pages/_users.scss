@@ -3,6 +3,35 @@
 
 .user-container {
   padding: $space-md;
+  .action-btn {
+    @include flex($justify: center);
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    &__edit {
+      color: $tertiary-color;
+      cursor: pointer;
+      transition: $transition-normal;
+      &:hover {
+        color: rgba($tertiary-color, 0.8);
+      }
+      &:disabled {
+        color: rgba($tertiary-color, 0.5);
+        cursor: not-allowed;
+      }
+    }
+    &__delete {
+      color: $color-error;
+      cursor: pointer;
+      transition: $transition-normal;
+      &:hover {
+        color: rgba($color-error, 0.8);
+      }
+      &:disabled {
+        color: rgba($tertiary-color, 0.5);
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 .user-filter {
   @include flex($justify: space-between);
