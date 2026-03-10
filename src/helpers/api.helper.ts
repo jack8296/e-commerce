@@ -8,4 +8,5 @@ export const APIS = {
   PRODUCTS: "/products",
   ADD_USER: "/users",
   ALL_USERS: "/users",
+  UPDATE_USER:"/users"
 };

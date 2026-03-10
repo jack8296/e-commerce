@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   GetAllUsers,
   DeleteSingleUser,
+  updateUser
 } from "../../services/user/user.service";
 //icons
 import { FaEdit } from "react-icons/fa";
@@ -25,7 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 //types
-import type { EditUserValues } from "../../types/types";
+import type { EditUserValues ,EditUserResponse} from "../../types/types";
 
 const Users = (): JSX.Element => {
   const [userValue, setUserValue] = useState({
@@ -33,6 +34,7 @@ const Users = (): JSX.Element => {
     filter: "",
   });
   const [editUserValue, setEditUserValue] = useState<EditUserValues>({
+    id:0,
     username: "",
     email: "",
     password: "",
@@ -122,15 +124,40 @@ const Users = (): JSX.Element => {
     },
   });
 
+const { mutate: updateUserMutate, isPending: isUserUpdatePending } = useMutation({
+  mutationFn:(body:EditUserValues)=>updateUser(body),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+    toast.success("User update successfully!");
+  },
+
+  onError: () => {
+    toast.error("Failed to update user");
+  }
+});
   const handleDeleteUser = useCallback(() => {
     deleteUser(userId);
     setIsDeleteModalOpen(false);
   }, [deleteUser]);
 
-  const handleOpenEdit = useCallback((id: number) => {
+  const handleOpenEdit = useCallback((user:EditUserResponse) => {
     setUserEditOpen(true);
-    setUserId(id);
+    setEditUserValue({
+      id:user.id,
+      username: `${user.name.firstname} ${user.name.lastname}`,
+      email: user.email,
+      password:user.password
+    })
   }, []);
+
+  const handleCloseEdit = useCallback(() => {
+    setUserEditOpen(false)
+  }, [])
+  
+  const handleUpdateUser = useCallback(() => {
+    updateUserMutate(editUserValue)
+    setUserEditOpen(false)
+  },[])
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching users</div>;
@@ -168,7 +195,6 @@ const Users = (): JSX.Element => {
         isOpen={userEditOpen}
         setIsOpen={setUserEditOpen}
       >
-        <h1 className="addUser-title">Add User</h1>
         <div className="addUser-form">
           <div className="addUser-form__input">
             <CustomInput
@@ -184,7 +210,7 @@ const Users = (): JSX.Element => {
               label="Email"
               type="email"
               name="email"
-              value={editUserValue.username}
+              value={editUserValue.email}
               onChange={handleEditValue}
             />
           </div>
@@ -199,7 +225,7 @@ const Users = (): JSX.Element => {
           </div>
           <div className="addUser-form-action">
             <div className="addUser-form-action__cancel">
-              <CustomButton variant="danger" type="button" onClick={() => {}}>
+              <CustomButton variant="danger" type="button" onClick={handleCloseEdit}>
                 <span className="title">Cancel</span>
                 <span className="icon">
                   <ImCross />
@@ -210,9 +236,10 @@ const Users = (): JSX.Element => {
               <CustomButton
                 variant="secondary"
                 type="submit"
-                onClick={() => {}}
+                onClick={handleUpdateUser}
+                disabled={isUserUpdatePending}
               >
-                <span className="title">Add User</span>
+                <span className="title">Update User</span>
                 <span className="icon">
                   <FaSave />
                 </span>
@@ -256,7 +283,7 @@ const Users = (): JSX.Element => {
                   <td className="action-btn">
                     <span
                       className="action-btn__edit"
-                      onClick={() => handleOpenEdit(user.id)}
+                      onClick={() => handleOpenEdit(user)}
                     >
                       <FaEdit />
                     </span>

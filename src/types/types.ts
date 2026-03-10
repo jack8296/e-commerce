@@ -135,7 +135,23 @@ export type AddUserValues = {
 };
 
 export type EditUserValues = {
+  id:number,
   username: string;
   email: string;
   password: string;
 };
+
+export type EditUserResponse = {
+  id:number,
+  name: {
+    firstname: string,
+    lastname: string,
+  };
+  email: string;
+  password: string;
+}
+
+export type UpdateUserResponse = {
+  id: number,
+  body:EditUserValues
+}
