@@ -133,3 +133,9 @@ export type AddUserValues = {
   email: string;
   password: string;
 };
+
+export type EditUserValues = {
+  username: string;
+  email: string;
+  password: string;
+};

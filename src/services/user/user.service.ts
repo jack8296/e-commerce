@@ -17,3 +17,8 @@ export const GetAllUsers = async <T>(): Promise<T[]> => {
   const response = await api<T[]>(APIS.ALL_USERS, "GET");
   return response;
 };
+
+export const DeleteSingleUser = async (id: number): Promise<void> => {
+  const response = await api<void>(`${APIS.ONE_USER}/${id}`, "DELETE");
+  return response;
+};
