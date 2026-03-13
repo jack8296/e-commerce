@@ -152,9 +152,16 @@ export type EditUserResponse = {
 };
 
 export type AddCartsValues = {
+  id: number;
   title: string;
   price: number;
   category: string;
   image: string;
   description: string;
+};
+
+export type AddCartResponse = {
+  id: number;
+  userId: number;
+  products: AddCartsValues[];
 };

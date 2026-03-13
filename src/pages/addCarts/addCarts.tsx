@@ -10,10 +10,17 @@ import { useNavigate } from "react-router";
 import { ImCross } from "react-icons/im";
 import { FaSave } from "react-icons/fa";
 //types
-import { type AddCartsValues } from "../../types/types";
+import { type AddCartsValues, type AddCartResponse } from "../../types/types";
+//services
+import { addCarts } from "../../services/carts/cart.service";
+//react-query
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+//toast
 
 const AddCarts = (): JSX.Element => {
   const [addCartsValues, setAddCartsValues] = useState<AddCartsValues>({
+    id: Math.floor(Math.random() * 1000),
     title: "",
     price: 0,
     category: "",
@@ -33,8 +40,37 @@ const AddCarts = (): JSX.Element => {
     [],
   );
 
-  console.log("value", addCartsValues);
-
+  const { mutate: addCartMutate, isPending: isAddCartPending } = useMutation({
+    mutationFn: (body: AddCartResponse) => addCarts(body),
+    onSuccess: () => {
+      toast.success("successfully added!");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  const addCartFn = useCallback(() => {
+    const { title, category, description, price, image } = addCartsValues;
+    const body: AddCartResponse = {
+      id: Math.floor(Math.random() * 1000),
+      userId: 1,
+      products: [],
+    };
+    if (body.products.length === 0) {
+      body.products.push({ ...addCartsValues });
+    }
+    if (
+      title === "" ||
+      category === "" ||
+      description === "" ||
+      !price ||
+      image === ""
+    ) {
+      toast.error("Please fill al the fields");
+      return;
+    }
+    addCartMutate(body);
+  }, [addCartsValues]);
   return (
     <div className="addCarts-container">
       <h2>Add Carts</h2>
@@ -92,7 +128,7 @@ const AddCarts = (): JSX.Element => {
               </div>
             </CustomButton>
           </div>
-          <div className="form-action__submit" onClick={() => {}}>
+          <div className="form-action__submit" onClick={addCartFn}>
             <CustomButton variant="secondary" type="submit">
               <div className="title">Submit</div>
               <div className="icon">
