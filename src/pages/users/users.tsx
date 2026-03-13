@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   GetAllUsers,
   DeleteSingleUser,
-  updateUser
+  updateUser,
 } from "../../services/user/user.service";
 //icons
 import { FaEdit } from "react-icons/fa";
@@ -26,7 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 //types
-import type { EditUserValues ,EditUserResponse} from "../../types/types";
+import type { EditUserValues, EditUserResponse } from "../../types/types";
 
 const Users = (): JSX.Element => {
   const [userValue, setUserValue] = useState({
@@ -34,7 +34,7 @@ const Users = (): JSX.Element => {
     filter: "",
   });
   const [editUserValue, setEditUserValue] = useState<EditUserValues>({
-    id:0,
+    id: 0,
     username: "",
     email: "",
     password: "",
@@ -124,40 +124,41 @@ const Users = (): JSX.Element => {
     },
   });
 
-const { mutate: updateUserMutate, isPending: isUserUpdatePending } = useMutation({
-  mutationFn:(body:EditUserValues)=>updateUser(body),
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["users"] });
-    toast.success("User update successfully!");
-  },
+  const { mutate: updateUserMutate, isPending: isUserUpdatePending } =
+    useMutation({
+      mutationFn: (body: EditUserValues) => updateUser(body),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["users"] });
+        toast.success("User update successfully!");
+      },
 
-  onError: () => {
-    toast.error("Failed to update user");
-  }
-});
+      onError: () => {
+        toast.error("Failed to update user");
+      },
+    });
   const handleDeleteUser = useCallback(() => {
     deleteUser(userId);
     setIsDeleteModalOpen(false);
   }, [deleteUser]);
 
-  const handleOpenEdit = useCallback((user:EditUserResponse) => {
+  const handleOpenEdit = useCallback((user: EditUserResponse) => {
     setUserEditOpen(true);
     setEditUserValue({
-      id:user.id,
+      id: user.id,
       username: `${user.name.firstname} ${user.name.lastname}`,
       email: user.email,
-      password:user.password
-    })
+      password: user.password,
+    });
   }, []);
 
   const handleCloseEdit = useCallback(() => {
-    setUserEditOpen(false)
-  }, [])
-  
+    setUserEditOpen(false);
+  }, []);
+
   const handleUpdateUser = useCallback(() => {
-    updateUserMutate(editUserValue)
-    setUserEditOpen(false)
-  },[])
+    updateUserMutate(editUserValue);
+    setUserEditOpen(false);
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching users</div>;
@@ -225,7 +226,11 @@ const { mutate: updateUserMutate, isPending: isUserUpdatePending } = useMutation
           </div>
           <div className="addUser-form-action">
             <div className="addUser-form-action__cancel">
-              <CustomButton variant="danger" type="button" onClick={handleCloseEdit}>
+              <CustomButton
+                variant="danger"
+                type="button"
+                onClick={handleCloseEdit}
+              >
                 <span className="title">Cancel</span>
                 <span className="icon">
                   <ImCross />
@@ -249,7 +254,7 @@ const { mutate: updateUserMutate, isPending: isUserUpdatePending } = useMutation
         </div>
       </DeleteModal>
       <div className="user-container">
-        <h1>Users Details</h1>
+        <h2>Users Details</h2>
         <div className="user-filter">
           <CustomInput
             label="Search Users"
