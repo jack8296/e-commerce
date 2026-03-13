@@ -129,7 +129,11 @@ const AddCarts = (): JSX.Element => {
             </CustomButton>
           </div>
           <div className="form-action__submit" onClick={addCartFn}>
-            <CustomButton variant="secondary" type="submit">
+            <CustomButton
+              variant="secondary"
+              type="submit"
+              disabled={isAddCartPending}
+            >
               <div className="title">Submit</div>
               <div className="icon">
                 <FaSave />
