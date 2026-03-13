@@ -3,4 +3,10 @@
 
 .addCarts-container {
   padding: $space-md;
+  box-shadow: $shadow-md;
+  border-radius: $radius-md;
+  h2 {
+    color: $text-secondary;
+    padding: $space-lg 0;
+  }
 }

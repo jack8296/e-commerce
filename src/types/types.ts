@@ -135,23 +135,26 @@ export type AddUserValues = {
 };
 
 export type EditUserValues = {
-  id:number,
+  id: number;
   username: string;
   email: string;
   password: string;
 };
 
 export type EditUserResponse = {
-  id:number,
+  id: number;
   name: {
-    firstname: string,
-    lastname: string,
+    firstname: string;
+    lastname: string;
   };
   email: string;
   password: string;
-}
+};
 
-export type UpdateUserResponse = {
-  id: number,
-  body:EditUserValues
-}
+export type AddCartsValues = {
+  title: string;
+  price: number;
+  category: string;
+  image: string;
+  description: string;
+};
