@@ -1,4 +1,6 @@
 import { api, APIS } from "../../helpers/api.helper";
+//types
+import type { CartsResponse } from "../../types/types";
 
 export const addCarts = async <TRequest, TResponse>(
   body: TRequest,
@@ -7,7 +9,7 @@ export const addCarts = async <TRequest, TResponse>(
   return response;
 };
 
-export const getAllCarts = async <T>(): Promise<T> => {
-  const response = await api<T>(APIS.ADD_CARTS, "GET");
+export const getAllCarts = async (): Promise<CartsResponse[]> => {
+  const response = await api<CartsResponse[]>(APIS.ADD_CARTS, "GET");
   return response;
 };

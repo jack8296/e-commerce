@@ -165,3 +165,25 @@ export type AddCartResponse = {
   userId: number;
   products: AddCartsValues[];
 };
+
+interface Product {
+  productId: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  quantity: number;
+}
+export interface CartsResponse {
+  id: number;
+  userId: number;
+  products: Product[];
+}
+
+export type FlatCart = {
+  productId: number;
+  quantity: number;
+  userId: number;
+  id: number;
+};

@@ -51,7 +51,7 @@ const Sidebar = ({
               <div
                 className={`arrow-icons ${sidebarName === "products" ? "active" : ""}`}
               >
-                <IoIosArrowUp />
+                {!toggleSidebar && <IoIosArrowUp />}
               </div>
             </li>
             <div
@@ -86,7 +86,7 @@ const Sidebar = ({
               <div
                 className={`arrow-icons ${sidebarName === "carts" ? "active" : ""}`}
               >
-                <IoIosArrowUp />
+                {!toggleSidebar && <IoIosArrowUp />}
               </div>
             </li>
             <div
@@ -121,7 +121,7 @@ const Sidebar = ({
               <div
                 className={`arrow-icons ${sidebarName === "users" ? "active" : ""}`}
               >
-                <IoIosArrowUp />
+                {!toggleSidebar && <IoIosArrowUp />}
               </div>
             </li>
             <div
